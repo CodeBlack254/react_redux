@@ -1,20 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "../store/cartSlice";
+import { getProducts } from "../store/productSlice";
 
 const Product = () => {
-    const [products, getProducts] = useState([]);
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(data => data.json())
-            .then(result => getProducts(result))
-    });
-
     const dispatch = useDispatch();
+    const {data: products, status} = useSelector(state => state.products);
+
+    useEffect(() => {
+        // dispatch an action for fetch products
+        dispatch(getProducts());
+    }, []);
+
     const addToCart = (product) => {
-        //dispatch an add action
         dispatch(add(product))
+    }
+
+    if (status === 'loading') {
+        return (
+            <div className="p-4 m-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                <span className="font-medium">Loading, please wait...</span>
+            </div>
+        );
+    }
+    if (status === 'error') {
+        return (
+            <div className="p-4 m-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                <span className="font-medium">Something went wrong! Try again.</span>
+            </div>
+        );
     }
 
     const cards = products.map(product => (

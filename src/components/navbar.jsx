@@ -13,7 +13,7 @@ function classNames(...classes) {
 } 
 
 export default function Navbar() {
-    const cartProducts = useSelector(state => state.cart);
+    const cartQuantity = useSelector(state => state.cart.items);
     return (
         <Disclosure as="nav" className="bg-gray-800">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -64,7 +64,7 @@ export default function Navbar() {
                             <ShoppingBagIcon aria-hidden="true" className="h-6 w-6" />
                         </button> 
                         </a>
-                        <h3>{cartProducts.length}</h3>
+                        <h3>{cartQuantity.length}</h3>
                         {/* Profile dropdown */}
                         <Menu as="div" className="relative ml-3">
                             <div>
