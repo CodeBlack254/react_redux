@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../store/cartSlice";
 import { getProducts } from "../store/productSlice";
+import StatusCode from "../utils/status_code";
 
 const Product = () => {
     const dispatch = useDispatch();
@@ -17,14 +18,14 @@ const Product = () => {
         dispatch(add(product))
     }
 
-    if (status === 'loading') {
+    if (status === StatusCode.LOADING) {
         return (
             <div className="p-4 m-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
                 <span className="font-medium">Loading, please wait...</span>
             </div>
         );
     }
-    if (status === 'error') {
+    if (status === StatusCode.ERROR) {
         return (
             <div className="p-4 m-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
                 <span className="font-medium">Something went wrong! Try again.</span>
